@@ -8,12 +8,14 @@ use Data::Dumper;
 # ATTRIBUTES
 has "hash1" => (
 	is => "ro",
-	isa => "HashRef"
+	isa => "HashRef",
+	required => 1
 	);
 
 has "hash2" => (
 	is => "ro",
-	isa => "HashRef"
+	isa => "HashRef",
+	required => 1
 	);
 
 
