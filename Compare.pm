@@ -73,9 +73,34 @@ sub count {
 }
 
 
+# --------------------------------------------
 sub merge {
-	my $self = shift;
+	my $self     = shift;
+	my $which    = shift;
+	my $other    = "";
+	my %new_hash = ();
 
+
+	if ($which eq "hash1") {
+		$other = "hash2";
+	} elsif ($which eq "hash2") {
+		$other = "hash1";
+	} else {
+		die "\nYou have to tell me which are the values you want in the new hash!\n" .
+			"\tExample:\n" .
+			"\tmy \$new_hash = \$obj->merge(hash1)\n" .
+			"\t# This new hash will have the keys common to both hashes and the values of the " .
+			"first hash\n\n";
+	}
+
+	my @common_keys = grep { exists $self->$which->{$_} } keys %{ $self->$other };
+
+	print STDERR "\n###########################\n" .
+				 "\t" . scalar(@common_keys) . " $other keys in $which\n\n";
+
+	%new_hash = map { $_ => $self->$which->{$_} } @common_keys;
+
+	return(\%new_hash);
 
 }
 
