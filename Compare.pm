@@ -56,26 +56,6 @@ sub get_unique {
 }
 
 # --------------------------------------------
-sub count {
-	my $self 	   = shift;
-	my $total_keys = 0;
-
-	print STDERR "\n###########################\n" .
-				 "- " . scalar(keys %{ $self->hash1 }) . " keys in hash 1\n" .
-				 "- " . scalar(keys %{ $self->hash2 }) . " keys in hash 2\n" ;
-
-	for my $i (1..2) {
-		$total_keys += keys %{ $self->get_unique("hash" . $i) };
-	}
-
-	print STDERR "\n###########################\n" .
-				 "- " . $total_keys . " total (unique) keys in both hashes\n";
-
-	return;
-}
-
-
-# --------------------------------------------
 sub merge {
 	my $self     = shift;
 	my $which    = shift;
@@ -98,13 +78,36 @@ sub merge {
 	my @common_keys = grep { exists $self->$which->{$_} } keys %{ $self->$other };
 
 	print STDERR "\n###########################\n" .
-				 "\t" . scalar(@common_keys) . " $other keys in $which\n\n";
+				 "- " . scalar(@common_keys) . " $other keys in $which\n\n";
 
 	%new_hash = map { $_ => $self->$which->{$_} } @common_keys;
 
 	return(\%new_hash);
 
 }
+
+# --------------------------------------------
+sub count {
+	my $self 	   = shift;
+	my $total_keys = 0;
+
+	print STDERR "\n###########################\n" .
+				 "- " . scalar(keys %{ $self->hash1 }) . " keys in hash 1\n" .
+				 "- " . scalar(keys %{ $self->hash2 }) . " keys in hash 2\n" ;
+
+	for my $i (1..2) {
+		$total_keys += keys %{ $self->get_unique("hash" . $i) };
+	}
+
+	my $common_keys = keys %{ $self->merge("hash2") };
+
+
+	print STDERR "\n###########################\n" .
+				 "- " . $total_keys . " total (unique) keys in both hashes\n\n\n";
+
+	return;
+}
+
 
 no Moose;
 __PACKAGE__->meta->make_immutable
