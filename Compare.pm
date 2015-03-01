@@ -1,8 +1,6 @@
 #!/usr/bin/perl
 package Hash::Compare;
-
 use Moose;
-use Data::Dumper;
 
 # --------------------------------------------
 # ATTRIBUTES
@@ -72,7 +70,7 @@ sub merge {
 			"\tExample:\n" .
 			"\tmy \$new_hash = \$obj->merge(hash1)\n" .
 			"\t# This new hash will have the keys common to both hashes and the values of the " .
-			"first hash\n\n";
+			"desired hash\n\n";
 	}
 
 	my @common_keys = grep { exists $self->$which->{$_} } keys %{ $self->$other };
