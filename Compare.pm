@@ -101,9 +101,8 @@ sub count {
 
 	my $common_keys = keys %{ $self->merge("hash2") };
 
-
 	print STDERR "\n###########################\n" .
-				 "- " . $total_keys . " total (unique) keys in both hashes\n\n\n";
+				 "- " . ($total_keys + $common_keys) . " total (unique) keys in both hashes\n\n\n";
 
 	return;
 }
